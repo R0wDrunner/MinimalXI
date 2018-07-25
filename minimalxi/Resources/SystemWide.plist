@@ -1,0 +1,45 @@
+{
+	title =  "MinimalXI";
+	entry = {
+		cell = PSLinkCell;
+	};
+	items = (
+		{
+			cell = PSGroupCell;
+			defaults = "com.xiva.minimalxi";
+			label = "Home Screen";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "hideFolderBg";
+			label = "Hide Folder Background";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "hideFolderBlur";
+			label = "Hide Folder Blurry Background";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "showNameBg";
+			label = "Show Folder Name Background";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "hideFolderIcon";
+			label = "Hide Folder Icon";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+	);
+}

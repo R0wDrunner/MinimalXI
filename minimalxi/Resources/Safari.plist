@@ -1,0 +1,21 @@
+{
+	title =  "MinimalXI";
+	entry = {
+		cell = PSLinkCell;
+	};
+	items = (
+		{
+			cell = PSGroupCell;
+			defaults = "com.xiva.minimalxi";
+			label = "IOS 12 CONCEPT STYLE UI";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "hideUrlBG";
+			label = "Hide URL Bar Background";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+	);
+}

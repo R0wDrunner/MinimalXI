@@ -1,0 +1,112 @@
+{
+	title =  "MinimalXI";
+	entry = {
+		cell = PSLinkCell;
+	};
+	items = (
+		{
+			cell = PSGroupCell;
+			label = "";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "tweakEnabled";
+			label = "Enabled";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSGroupCell;
+			defaults = "com.xiva.minimalxi";
+			label = "Miscellaneous";
+			footerText = "Hiding Search Background is a bit buggy for now. (Try it yourself)";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "hideSeparators";
+			label = "Hide Separators";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "noLargeTitles";
+			label = "No Large Titles";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "hideSearchBackground";
+			label = "Hide Search Background";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSGroupCell;
+			defaults = "com.xiva.minimalxi";
+		},
+		{
+			cell = PSLinkCell;
+			defaults = "com.xiva.minimalxi";
+			label = "System Wide";
+			detail = "SystemWide";
+		},
+		{
+			cell = PSGroupCell;
+			defaults = "com.xiva.minimalxi";
+			label = "App Tweaking";
+		},
+		{
+			cell = PSLinkCell;
+			defaults = "com.xiva.minimalxi";
+			label = "Settings";
+			detail = "IOSConceptStyle";
+		},
+		{
+			cell = PSLinkCell;
+			defaults = "com.xiva.minimalxi";
+			label = "Safari";
+			detail = "Safari";
+		},
+		{
+			cell = PSGroupCell;
+			defaults = "com.xiva.minimalxi";
+			label = "";
+			footerText = "For now, only editing the Folder Icon requires a Respring. Others may need an App Restart.";
+		},
+		{
+			cell = PSButtonCell;
+			defaults = "com.xiva.minimalxi";
+			action = respring;
+			label = "Respring";
+		},
+		{
+			cell = PSGroupCell;
+			defaults = "com.xiva.minimalxi";
+			footerAlignment =  1;
+			footerText = "XIVA";
+		},
+		{
+			cellClass = "HBTwitterCell";
+			label = "XIVA";
+			user = "xivadev";
+		},
+		{
+			cellClass = "HBLinkTableCell";
+			url = "https://www.paypal.me/XIVA";
+			label = "Donate";
+			subtitle = "If you like my work, you can donate per Paypal.";
+		},
+		{
+			cellClass = "HBLinkTableCell";
+			url = "https://github.com/XIVAdev";
+			label = "Source Code";
+			subtitle = "You want to see my Code? Here it is!";
+		},
+	);
+}
