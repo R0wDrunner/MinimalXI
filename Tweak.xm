@@ -47,47 +47,28 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("com.xiva.minimalxi-prefsreload"), NULL, CFNotificationSuspensionBehaviorCoalesce);
   }
 
-@interface _UISearchBarSearchFieldBackgroundView
-@property CGFloat alpha;
+@interface _UISearchBarSearchFieldBackgroundView : UIView
 @end
-@interface PSListController
+@interface PSListController : UIView
 -(void) setEdgeToEdgeCells:(bool)arg1;
--(bool) _isRegularWidth;
 @end
-@interface PSUIPrefsListController
--(bool) skipSelectingGeneralOnLaunch;
+@interface _SFNavigationBarURLButtonBackgroundView : UIView
 @end
-@interface _SFNavigationBarURLButtonBackgroundView
-@property bool hidden;
+@interface _UINavigationBarLargeTitleViewLayout : UIView
 @end
-@interface _UINavigationBarLargeTitleViewLayout
--(double) _textHeightForSize:(CGSize)arg1;
+@interface  SBFolderBackgroundView : UIView
 @end
-@interface  SBFolderBackgroundView
-@property bool hidden;
+@interface SBFolderControllerBackgroundView : UIView
 @end
-@interface SBFolderControllerBackgroundView
-@property bool hidden;
+@interface UITextFieldBorderView : UIView
 @end
-@interface UITextFieldBorderView
-  @property CGFloat alpha;
-  -(id)superview;
+@interface  SBFolderIconBackgroundView : UIView
 @end
-@interface  SBFolderIconBackgroundView
-  @property bool hidden;
-  -(void) setHidden:(bool)arg1;
+@interface SBIconLegibilityLabelView : UIView
 @end
-@interface SBIconLegibilityLabelView
-@property bool hidden;
+@interface SBDarkeningImageView : UIView
 @end
-@interface SBDarkeningImageView
-@property bool hidden;
--(void)setFrame:(CGRect)arg1;
--(id)superview;
-@end
-
-@interface SBIconBadgeView
--(void)setFrame:(CGRect)arg1;
+@interface SBIconBadgeView : UIView
 @end
 
 
