@@ -7,7 +7,7 @@
 		{
 			cell = PSGroupCell;
 			defaults = "com.xiva.minimalxi";
-			label = "Home Screen";
+			label = "Home Screen | Folder";
 		},
 		{
 			cell = PSSwitchCell;
@@ -29,16 +29,37 @@
 			cell = PSSwitchCell;
 			default = true;
 			defaults = "com.xiva.minimalxi";
-			key = "showNameBg";
-			label = "Show Folder Name Background";
+			key = "hideFolderIcon";
+			label = "Hide Folder Icon";
 			PostNotification = "com.xiva.minimalxi-prefsreload";
 		},
 		{
 			cell = PSSwitchCell;
 			default = true;
 			defaults = "com.xiva.minimalxi";
-			key = "hideFolderIcon";
-			label = "Hide Folder Icon";
+			key = "showNameBg";
+			label = "Show Folder Name Background";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSGroupCell;
+			defaults = "com.xiva.minimalxi";
+			label = "Home Screen | App Icons";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "hideIconLabels";
+			label = "Hide Icon Labels";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "hideBadgeCount";
+			label = "Hide Badge Count";
 			PostNotification = "com.xiva.minimalxi-prefsreload";
 		},
 	);

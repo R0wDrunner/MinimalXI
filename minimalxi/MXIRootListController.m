@@ -21,15 +21,27 @@
 	UIImage *icon = [[UIImage alloc] initWithContentsOfFile:xTitleIconPath];
 	if (icon) {
 		UIImageView *iconView = [[UIImageView alloc] initWithImage:icon];
-		iconView.layer.cornerRadius = iconView.frame.size.height /2;
-		iconView.layer.masksToBounds = YES;
-		iconView.layer.borderWidth = 0;
 		self.navigationItem.titleView = iconView;
 	}
 }
 
 -(void)respring {
-	system("killall -9 SpringBoard");
+	UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Respring"
+                           message:@"Are you sure you want to respring?"
+                           preferredStyle:UIAlertControllerStyleAlert];
+
+UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+}];
+
+UIAlertAction* defaultAction2 = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+																 system("killall -9 SpringBoard");
+}];
+
+[alert addAction:defaultAction];
+[alert addAction:defaultAction2];
+[self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

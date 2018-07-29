@@ -13,6 +13,9 @@
 #define HideFolderBlur PreferencesBool(@"hideFolderBlur", YES)
 #define ShowNameBg PreferencesBool(@"showNameBg", NO)
 #define HideFolderIcon PreferencesBool(@"hideFolderIcon", NO)
+#define HideIconLabels PreferencesBool(@"hideIconLabels", NO)
+#define HideBadgeCount PreferencesBool(@"hideBadgeCount", NO)
+
 
 
 
@@ -67,15 +70,24 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 @property bool hidden;
 @end
 @interface UITextFieldBorderView
-@property CGFloat alpha;
--(id)superview;
+  @property CGFloat alpha;
+  -(id)superview;
 @end
 @interface  SBFolderIconBackgroundView
-@property bool hidden;
--(void) setHidden:(bool)arg1;
+  @property bool hidden;
+  -(void) setHidden:(bool)arg1;
 @end
 @interface SBIconLegibilityLabelView
 @property bool hidden;
+@end
+@interface SBDarkeningImageView
+@property bool hidden;
+-(void)setFrame:(CGRect)arg1;
+-(id)superview;
+@end
+
+@interface SBIconBadgeView
+-(void)setFrame:(CGRect)arg1;
 @end
 
 
@@ -123,9 +135,9 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
   -(bool) skipSelectingGeneralOnLaunch {
     if(TweakEnabled && EnableConcept) {
       return YES;
-    } else {
-      return NO;
-    }
+      } else {
+        return NO;
+      }
   }
 %end
 
@@ -158,15 +170,15 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 %end
 
 %hook SBFolderBackgroundView
--(void)layoutSubviews {
-  if(TweakEnabled && HideFolderBg) {
-    %orig();
-    self.hidden = true;
-  } else {
-    %orig();
-    self.hidden = false;
+  -(void)layoutSubviews {
+    if(TweakEnabled && HideFolderBg) {
+      %orig();
+      self.hidden = true;
+    } else {
+      %orig();
+      self.hidden = false;
+    }
   }
-}
 %end
 
 %hook SBFolderControllerBackgroundView
@@ -214,11 +226,72 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 
 %hook SBIconLegibilityLabelView
 -(void) layoutSubviews {
-  %orig();
-  self.hidden = true;
+  if(TweakEnabled && HideIconLabels) {
+    %orig();
+    self.hidden = true;
+  } else {
+    %orig();
+  }
 }
 -(void) setHidden:(bool)arg1 {
-  %orig(true);
+  if(TweakEnabled && HideIconLabels) {
+    %orig(true);
+  } else {
+    %orig();
+  }
 }
+%end
 
+%hook SBDarkeningImageView
+-(void) layoutSubviews {
+  BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBDarkeningImageView)];
+  BOOL isDaddy = [[self superview] isMemberOfClass:%c(SBIconParallaxBadgeView)];
+
+  if(TweakEnabled && HideBadgeCount && isCorrect) {
+    %orig();
+    self.hidden = true;
+  } else {
+    %orig();
+  }
+  if(TweakEnabled && HideBadgeCount && isDaddy) {
+    %orig();
+    [self setFrame:CGRectMake( 0, 0, 26, 26)];
+  } else {
+    %orig();
+  }
+  %orig();
+}
+-(void) setHidden:(bool)arg1 {
+  BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBDarkeningImageView)];
+  if(TweakEnabled && HideBadgeCount && isCorrect) {
+    %orig(true);
+  } else {
+    %orig();
+  }
+}
+%end
+
+%hook SBIconBadgeView
+-(void) layoutSubviews {
+  if(TweakEnabled && HideBadgeCount) {
+    %orig();
+    [self setFrame:CGRectMake( 45, -11, 26, 26)];
+  } else {
+    %orig();
+  }
+  %orig();
+}
+%end
+
+
+%hook SBIconParallaxBadgeView
+-(void) layoutSubviews {
+  if(TweakEnabled && HideBadgeCount) {
+    %orig();
+    [self setFrame:CGRectMake( 45, -11, 26, 26)];
+  } else {
+    %orig();
+  }
+  %orig();
+}
 %end

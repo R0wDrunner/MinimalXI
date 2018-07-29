@@ -5,8 +5,35 @@
 	};
 	items = (
 		{
+		cellClass = "HBImageTableCell";
+		height = 150;
+		icon = "logo.png";
+		},
+		{
 			cell = PSGroupCell;
 			label = "";
+		},
+		{
+			cellClass = "HBTwitterCell";
+			label = "XIVA";
+			user = "xivadev";
+		},
+		{
+			cellClass = "HBTwitterCell";
+			label = "ValenB";
+			user = "v_alenb";
+		},
+		{
+			cellClass = "HBLinkTableCell";
+			url = "https://www.paypal.me/XIVA";
+			label = "Donate";
+			subtitle = "If you like my work, you can donate per Paypal.";
+		},
+		{
+			cellClass = "HBLinkTableCell";
+			url = "https://github.com/XIVAdev";
+			label = "Source Code";
+			subtitle = "You want to see my Code? Here it is!";
 		},
 		{
 			cell = PSSwitchCell;
@@ -77,7 +104,7 @@
 			cell = PSGroupCell;
 			defaults = "com.xiva.minimalxi";
 			label = "";
-			footerText = "For now, only editing the Folder Icon requires a Respring. Others may need an App Restart.";
+			footerText = "Settings should take over without a respring, but if anything does not, use the respring button.";
 		},
 		{
 			cell = PSButtonCell;
@@ -90,23 +117,6 @@
 			defaults = "com.xiva.minimalxi";
 			footerAlignment =  1;
 			footerText = "XIVA";
-		},
-		{
-			cellClass = "HBTwitterCell";
-			label = "XIVA";
-			user = "xivadev";
-		},
-		{
-			cellClass = "HBLinkTableCell";
-			url = "https://www.paypal.me/XIVA";
-			label = "Donate";
-			subtitle = "If you like my work, you can donate per Paypal.";
-		},
-		{
-			cellClass = "HBLinkTableCell";
-			url = "https://github.com/XIVAdev";
-			label = "Source Code";
-			subtitle = "You want to see my Code? Here it is!";
 		},
 	);
 }
