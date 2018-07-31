@@ -17,7 +17,8 @@
 #define HideBadgeCount PreferencesBool(@"hideBadgeCount", NO)
 #define HideUpdatedDot PreferencesBool(@"hideUpdatedDot", YES)
 
-
+static UIView* seperatorsPointer;
+static UIView* searchbgPointer;
 
 
 #define SETTINGS_PLIST_PATH @"/var/mobile/Library/Preferences/com.xiva.minimalxi.plist"
@@ -39,6 +40,9 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
     CFArrayRef keyList = CFPreferencesCopyKeyList(appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
     preferences = (NSDictionary *)CFPreferencesCopyMultiple(keyList, appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
     CFRelease(keyList);
+
+    [seperatorsPointer didMoveToWindow];
+    [searchbgPointer didMoveToWindow];
 }
 
 %ctor
@@ -48,8 +52,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("com.xiva.minimalxi-prefsreload"), NULL, CFNotificationSuspensionBehaviorCoalesce);
   }
 
-@interface _UISearchBarSearchFieldBackgroundView
-@property CGFloat alpha;
+@interface _UISearchBarSearchFieldBackgroundView : UIView
 @end
 @interface PSListController
 -(void) setEdgeToEdgeCells:(bool)arg1;
@@ -87,6 +90,13 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 @end
 
 %hook UITableView //Hiding Separators
+  -(id)init {
+    self = %orig;
+    if (self) {
+      seperatorsPointer = self;
+    }
+    return self;
+  }
   -(void)setSeparatorStyle:(long long)arg1 {
     if (TweakEnabled && HideSeparators) {
       %orig(0);
@@ -97,12 +107,20 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 %end
 
 %hook _UISearchBarSearchFieldBackgroundView //HIDE SEARCH BACKGROUND
+  -(id)init {
+    self = %orig;
+    if (self) {
+      searchbgPointer = self;
+    }
+    return self;
+  }
   -(void)didMoveToWindow {
     if(TweakEnabled && HideSearchBackground) {
       %orig();
-      self.alpha = 0;
+      self.hidden = true;
     } else {
       %orig();
+      self.hidden = false;
     }
   }
 %end
