@@ -17,7 +17,7 @@
 #define HideBadgeCount PreferencesBool(@"hideBadgeCount", NO)
 #define HideUpdatedDot PreferencesBool(@"hideUpdatedDot", YES)
 
-
+static UIView* searchBackground;
 
 
 #define SETTINGS_PLIST_PATH @"/var/mobile/Library/Preferences/com.xiva.minimalxi.plist"
@@ -39,6 +39,8 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
     CFArrayRef keyList = CFPreferencesCopyKeyList(appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
     preferences = (NSDictionary *)CFPreferencesCopyMultiple(keyList, appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
     CFRelease(keyList);
+    
+    [searchBackground didMoveToWindow];
 }
 
 %ctor
@@ -97,6 +99,13 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 %end
 
 %hook _UISearchBarSearchFieldBackgroundView //HIDE SEARCH BACKGROUND
+  -(id)init {
+    self = %orig;
+    if (self) {
+      searchBackground = self;
+    }
+  }
+
   -(void)didMoveToWindow {
     if(TweakEnabled && HideSearchBackground) {
       %orig();
