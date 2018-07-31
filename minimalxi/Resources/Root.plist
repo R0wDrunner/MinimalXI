@@ -31,7 +31,7 @@
 		},
 		{
 			cellClass = "HBLinkTableCell";
-			url = "https://github.com/XIVAdev";
+			url = "https://github.com/XIVAdev/MinimalXI";
 			label = "Source Code";
 			subtitle = "You want to see my Code? Here it is!";
 		},

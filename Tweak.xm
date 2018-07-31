@@ -5,16 +5,17 @@
 
 #define TweakEnabled PreferencesBool(@"tweakEnabled", YES)
 #define HideSeparators PreferencesBool(@"hideSeparators", YES)
-#define HideSearchBackground PreferencesBool(@"hideSearchBackground", NO)
+#define HideSearchBackground PreferencesBool(@"hideSearchBackground", YES)
 #define EnableConcept PreferencesBool(@"enableConcept", NO)
 #define HideUrlBG PreferencesBool(@"hideUrlBG", YES)
 #define NoLargeTitles PreferencesBool(@"noLargeTitles", YES)
 #define HideFolderBg PreferencesBool(@"hideFolderBg", NO)
 #define HideFolderBlur PreferencesBool(@"hideFolderBlur", YES)
-#define ShowNameBg PreferencesBool(@"showNameBg", NO)
+#define ShowNameBg PreferencesBool(@"showNameBg", YES)
 #define HideFolderIcon PreferencesBool(@"hideFolderIcon", NO)
-#define HideIconLabels PreferencesBool(@"hideIconLabels", NO)
+#define HideIconLabels PreferencesBool(@"hideIconLabels", YES)
 #define HideBadgeCount PreferencesBool(@"hideBadgeCount", NO)
+#define HideUpdatedDot PreferencesBool(@"hideUpdatedDot", YES)
 
 
 
@@ -47,14 +48,20 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
         CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("com.xiva.minimalxi-prefsreload"), NULL, CFNotificationSuspensionBehaviorCoalesce);
   }
 
-@interface _UISearchBarSearchFieldBackgroundView : UIView
+@interface _UISearchBarSearchFieldBackgroundView
+@property CGFloat alpha;
 @end
-@interface PSListController : UIView
+@interface PSListController
 -(void) setEdgeToEdgeCells:(bool)arg1;
+-(bool) _isRegularWidth;
+@end
+@interface PSUIPrefsListController
+-(bool) skipSelectingGeneralOnLaunch;
 @end
 @interface _SFNavigationBarURLButtonBackgroundView : UIView
 @end
-@interface _UINavigationBarLargeTitleViewLayout : UIView
+@interface _UINavigationBarLargeTitleViewLayout
+-(double) _textHeightForSize:(CGSize)arg1;
 @end
 @interface  SBFolderBackgroundView : UIView
 @end
@@ -67,10 +74,17 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 @interface SBIconLegibilityLabelView : UIView
 @end
 @interface SBDarkeningImageView : UIView
+-(void)setFrame:(CGRect)arg1;
+-(id)superview;
+@end
+@interface SBIconParallaxBadgeView : UIView
+-(void)setFrame:(CGRect)arg1;
 @end
 @interface SBIconBadgeView : UIView
+-(void)setFrame:(CGRect)arg1;
 @end
-
+@interface SBIconRecentlyUpdatedLabelAccessoryView : UIView
+@end
 
 %hook UITableView //Hiding Separators
   -(void)setSeparatorStyle:(long long)arg1 {
@@ -82,8 +96,8 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
     }
 %end
 
-%hook _UISearchBarSearchFieldBackgroundView
-  -(void)layoutSubviews {
+%hook _UISearchBarSearchFieldBackgroundView //HIDE SEARCH BACKGROUND
+  -(void)didMoveToWindow {
     if(TweakEnabled && HideSearchBackground) {
       %orig();
       self.alpha = 0;
@@ -93,7 +107,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
   }
 %end
 
-%hook PSListController
+%hook PSListController //IOS12CONCEPT
   -(void) loadView {
     if(TweakEnabled && EnableConcept) {
       %orig();
@@ -122,7 +136,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
   }
 %end
 
-%hook _SFNavigationBarURLButtonBackgroundView
+%hook _SFNavigationBarURLButtonBackgroundView //SAFARI FLAT URL
   -(void) layoutSubviews {
     if(TweakEnabled && HideUrlBG) {
       %orig();
@@ -133,7 +147,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 }
 %end
 
-%hook _UINavigationBarLargeTitleViewLayout
+%hook _UINavigationBarLargeTitleViewLayout //NO LARGE TITLES
   -(double) _textHeightForSize:(CGSize)arg1 titleType:(long long)arg2 {
     if(TweakEnabled && NoLargeTitles) {
       return 0;
@@ -150,8 +164,8 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
   }
 %end
 
-%hook SBFolderBackgroundView
-  -(void)layoutSubviews {
+%hook SBFolderBackgroundView // HIDE FOLDER BACKGROUND
+  -(void)didMoveToWindow {
     if(TweakEnabled && HideFolderBg) {
       %orig();
       self.hidden = true;
@@ -162,8 +176,8 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
   }
 %end
 
-%hook SBFolderControllerBackgroundView
--(void)layoutSubviews {
+%hook SBFolderControllerBackgroundView //HIDEFOLDERBLUR
+-(void)didMoveToWindow {
   if(TweakEnabled && HideFolderBlur) {
     %orig();
     self.hidden = true;
@@ -174,8 +188,8 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 }
 %end
 
-%hook UITextFieldBorderView
--(void) layoutSubviews {
+%hook UITextFieldBorderView //SHOW FOLDER NAME BACKGROUND
+-(void)didMoveToWindow {
   BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBFolderTitleTextField)];
   if(TweakEnabled && ShowNameBg && isCorrect) {
     self.alpha = 1;
@@ -185,8 +199,8 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 }
 %end
 
-%hook SBFolderIconBackgroundView
--(void)layoutSubviews {
+%hook SBFolderIconBackgroundView //HIDE FOLDER ICON BACKGROUND
+-(void)didMoveToWindow {
   if(TweakEnabled && HideFolderIcon) {
     %orig();
     self.hidden = true;
@@ -224,7 +238,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 %end
 
 %hook SBDarkeningImageView
--(void) layoutSubviews {
+-(void)didMoveToWindow {
   BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBDarkeningImageView)];
   BOOL isDaddy = [[self superview] isMemberOfClass:%c(SBIconParallaxBadgeView)];
 
@@ -240,9 +254,8 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
   } else {
     %orig();
   }
-  %orig();
 }
--(void) setHidden:(bool)arg1 {
+-(void)setHidden:(bool)arg1 {
   BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBDarkeningImageView)];
   if(TweakEnabled && HideBadgeCount && isCorrect) {
     %orig(true);
@@ -253,7 +266,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 %end
 
 %hook SBIconBadgeView
--(void) layoutSubviews {
+-(void)didMoveToWindow {
   if(TweakEnabled && HideBadgeCount) {
     %orig();
     [self setFrame:CGRectMake( 45, -11, 26, 26)];
@@ -266,12 +279,22 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 
 
 %hook SBIconParallaxBadgeView
--(void) layoutSubviews {
+-(void)layoutSubviews {
   if(TweakEnabled && HideBadgeCount) {
     %orig();
     [self setFrame:CGRectMake( 45, -11, 26, 26)];
   } else {
     %orig();
+  }
+  %orig();
+}
+%end
+
+%hook SBIconRecentlyUpdatedLabelAccessoryView
+-(void)didMoveToWindow {
+  if(TweakEnabled && HideUpdatedDot) {
+    %orig();
+    self.hidden = true;
   }
   %orig();
 }

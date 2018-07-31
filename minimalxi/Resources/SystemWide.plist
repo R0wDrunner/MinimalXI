@@ -58,8 +58,32 @@
 			cell = PSSwitchCell;
 			default = true;
 			defaults = "com.xiva.minimalxi";
+			key = "hideBadge";
+			label = "Hide Badges";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "hideBadgeBackground";
+			label = "Hide Badge Background";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
 			key = "hideBadgeCount";
 			label = "Hide Badge Count";
+			PostNotification = "com.xiva.minimalxi-prefsreload";
+		},
+		{
+			cell = PSSwitchCell;
+			default = true;
+			defaults = "com.xiva.minimalxi";
+			key = "hideUpdatedDot";
+			label = "Hide Blue Updated Dot";
 			PostNotification = "com.xiva.minimalxi-prefsreload";
 		},
 	);
