@@ -15,108 +15,97 @@
 		},
 		{
 			cellClass = "HBTwitterCell";
-			label = "XIVA";
-			user = "xivadev";
-		},
-		{
-			cellClass = "HBTwitterCell";
-			label = "ValenB";
-			user = "v_alenb";
+			label = "R0wDrunner";
+			user = "r0wdrunner";
 		},
 		{
 			cellClass = "HBLinkTableCell";
-			url = "https://www.paypal.me/XIVA";
-			label = "Donate";
-			subtitle = "If you like my work, you can donate per Paypal.";
-		},
-		{
-			cellClass = "HBLinkTableCell";
-			url = "https://github.com/XIVAdev/MinimalXI";
+			url = "https://github.com/R0wDrunner/MinimalXI";
 			label = "Source Code";
 			subtitle = "You want to see my Code? Here it is!";
 		},
 		{
 			cell = PSSwitchCell;
 			default = true;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			key = "tweakEnabled";
 			label = "Enabled";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
 		},
 		{
 			cell = PSGroupCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			label = "Miscellaneous";
-			footerText = "Hiding Search Background is a bit buggy for now. (Try it yourself)";
+			footerText = "";
 		},
 		{
 			cell = PSSwitchCell;
 			default = true;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			key = "hideSeparators";
 			label = "Hide Separators";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
 		},
 		{
 			cell = PSSwitchCell;
 			default = true;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			key = "noLargeTitles";
 			label = "No Large Titles";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
 		},
 		{
 			cell = PSSwitchCell;
-			default = true;
-			defaults = "com.xiva.minimalxi";
+			default = false;
+			defaults = "com.r0wdrunner.minimalxi";
 			key = "hideSearchBackground";
 			label = "Hide Search Background";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
 		},
 		{
 			cell = PSGroupCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 		},
 		{
 			cell = PSLinkCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			label = "System Wide";
 			detail = "SystemWide";
 		},
 		{
 			cell = PSGroupCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			label = "App Tweaking";
 		},
 		{
 			cell = PSLinkCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			label = "Settings";
 			detail = "IOSConceptStyle";
 		},
 		{
 			cell = PSLinkCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			label = "Safari";
 			detail = "Safari";
 		},
 		{
 			cell = PSGroupCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			label = "";
 			footerText = "Settings should take over without a respring, but if anything does not, use the respring button.";
 		},
 		{
 			cell = PSButtonCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			action = respring;
 			label = "Respring";
 		},
 		{
 			cell = PSGroupCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			footerAlignment =  1;
-			footerText = "XIVA";
+			footerText = "R0wDrunner\nCatch Me If You Can";
 		},
 	);
 }

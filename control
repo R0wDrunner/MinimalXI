@@ -1,9 +1,10 @@
-Package: com.xiva.minimalxi
-Name: MinimalXI
+Package: com.r0wdrunner.minimalxi2
+Name: MinimalXI 2
 Depends: mobilesubstrate, ws.hbang.common (>= 1.11)
 Version: 1.1
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
-Maintainer: XIVA
-Author: XIVA
+Description: Minimal System UI Editor
+Maintainer: R0wDrunner
+Author: R0wDrunner
 Section: Tweaks
+Depiction: https://r0wdrunner.github.io/repo/depictions/?p=com.r0wdrunner.minimalxi2

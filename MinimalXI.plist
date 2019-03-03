@@ -1,1 +1,1 @@
-{ Filter = { Bundles = ( "com.apple.SpringBoard", "com.apple.UIKit", "com.apple.Preferences", "com.apple.AppStore" ); }; }
+{ Filter = { Bundles = ( "com.apple.springboard", "com.apple.UIKit", "com.apple.Preferences", "com.apple.AppStore", "com.apple.mobilephone", "net.whatsapp.WhatsApp" ); }; }

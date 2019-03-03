@@ -6,85 +6,69 @@
 	items = (
 		{
 			cell = PSGroupCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			label = "Home Screen | Folder";
 		},
 		{
 			cell = PSSwitchCell;
-			default = true;
-			defaults = "com.xiva.minimalxi";
+			default = false;
+			defaults = "com.r0wdrunner.minimalxi";
 			key = "hideFolderBg";
 			label = "Hide Folder Background";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
 		},
 		{
 			cell = PSSwitchCell;
-			default = true;
-			defaults = "com.xiva.minimalxi";
+			default = false;
+			defaults = "com.r0wdrunner.minimalxi";
 			key = "hideFolderBlur";
 			label = "Hide Folder Blurry Background";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
 		},
 		{
 			cell = PSSwitchCell;
-			default = true;
-			defaults = "com.xiva.minimalxi";
+			default = false;
+			defaults = "com.r0wdrunner.minimalxi";
 			key = "hideFolderIcon";
 			label = "Hide Folder Icon";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
 		},
 		{
 			cell = PSSwitchCell;
-			default = true;
-			defaults = "com.xiva.minimalxi";
+			default = false;
+			defaults = "com.r0wdrunner.minimalxi";
 			key = "showNameBg";
 			label = "Show Folder Name Background";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
 		},
 		{
 			cell = PSGroupCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			label = "Home Screen | App Icons";
 		},
 		{
 			cell = PSSwitchCell;
 			default = true;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			key = "hideIconLabels";
 			label = "Hide Icon Labels";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
 		},
 		{
 			cell = PSSwitchCell;
 			default = true;
-			defaults = "com.xiva.minimalxi";
-			key = "hideBadge";
-			label = "Hide Badges";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
-		},
-		{
-			cell = PSSwitchCell;
-			default = true;
-			defaults = "com.xiva.minimalxi";
-			key = "hideBadgeBackground";
-			label = "Hide Badge Background";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
-		},
-		{
-			cell = PSSwitchCell;
-			default = true;
-			defaults = "com.xiva.minimalxi";
-			key = "hideBadgeCount";
-			label = "Hide Badge Count";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
-		},
-		{
-			cell = PSSwitchCell;
-			default = true;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			key = "hideUpdatedDot";
 			label = "Hide Blue Updated Dot";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
+		},
+		{
+			cell = PSSwitchCell;
+			default = false;
+			defaults = "com.r0wdrunner.minimalxi";
+			key = "hideDockBackground";
+			label = "Hide Dock Background";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
 		},
 	);
 }

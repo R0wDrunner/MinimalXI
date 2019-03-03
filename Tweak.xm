@@ -5,23 +5,20 @@
 
 #define TweakEnabled PreferencesBool(@"tweakEnabled", YES)
 #define HideSeparators PreferencesBool(@"hideSeparators", YES)
-#define HideSearchBackground PreferencesBool(@"hideSearchBackground", YES)
+#define HideSearchBackground PreferencesBool(@"hideSearchBackground", NO)
 #define EnableConcept PreferencesBool(@"enableConcept", NO)
-#define HideUrlBG PreferencesBool(@"hideUrlBG", YES)
+#define HideUrlBG PreferencesBool(@"hideUrlBG", NO)
 #define NoLargeTitles PreferencesBool(@"noLargeTitles", YES)
 #define HideFolderBg PreferencesBool(@"hideFolderBg", NO)
-#define HideFolderBlur PreferencesBool(@"hideFolderBlur", YES)
-#define ShowNameBg PreferencesBool(@"showNameBg", YES)
+#define HideFolderBlur PreferencesBool(@"hideFolderBlur", NO)
+#define ShowNameBg PreferencesBool(@"showNameBg", NO)
 #define HideFolderIcon PreferencesBool(@"hideFolderIcon", NO)
 #define HideIconLabels PreferencesBool(@"hideIconLabels", YES)
-#define HideBadgeCount PreferencesBool(@"hideBadgeCount", NO)
 #define HideUpdatedDot PreferencesBool(@"hideUpdatedDot", YES)
-
-static UIView* seperatorsPointer;
-static UIView* searchbgPointer;
+#define HideDockBackground PreferencesBool(@"hideDockBackground", NO)
 
 
-#define SETTINGS_PLIST_PATH @"/var/mobile/Library/Preferences/com.xiva.minimalxi.plist"
+#define SETTINGS_PLIST_PATH @"/var/mobile/Library/Preferences/com.r0wdrunner.minimalxi.plist"
 
 static NSDictionary *preferences;
 static BOOL PreferencesBool(NSString* key, BOOL fallback)
@@ -34,22 +31,21 @@ static float PreferencesFloat(NSString* key, float fallback)
         return [preferences objectForKey:key] ? [[preferences objectForKey:key] floatValue] : fallback;
     } */
 
+
 static void PreferencesChangedCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
     [preferences release];
-    CFStringRef appID = CFSTR("com.xiva.minimalxi");
+    CFStringRef appID = CFSTR("com.r0wdrunner.minimalxi");
     CFArrayRef keyList = CFPreferencesCopyKeyList(appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
     preferences = (NSDictionary *)CFPreferencesCopyMultiple(keyList, appID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
     CFRelease(keyList);
-
-    [seperatorsPointer didMoveToWindow];
-    [searchbgPointer didMoveToWindow];
-}
+    //Calling the Methods, so that after a Change in the Tweak's Settings, everything works without a Respring. Not Fully done yet.
+  }
 
 %ctor
   {
         preferences = [[NSDictionary alloc] initWithContentsOfFile:SETTINGS_PLIST_PATH];
 
-        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("com.xiva.minimalxi-prefsreload"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)PreferencesChangedCallback, CFSTR("com.r0wdrunner.minimalxi-prefsreload"), NULL, CFNotificationSuspensionBehaviorCoalesce);
   }
 
 @interface _UISearchBarSearchFieldBackgroundView : UIView
@@ -74,29 +70,37 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 @end
 @interface  SBFolderIconBackgroundView : UIView
 @end
-@interface SBIconLegibilityLabelView : UIView
-@end
-@interface SBDarkeningImageView : UIView
--(void)setFrame:(CGRect)arg1;
--(id)superview;
-@end
-@interface SBIconParallaxBadgeView : UIView
--(void)setFrame:(CGRect)arg1;
-@end
-@interface SBIconBadgeView : UIView
--(void)setFrame:(CGRect)arg1;
+@interface _UILegibilityImageView : UIView
 @end
 @interface SBIconRecentlyUpdatedLabelAccessoryView : UIView
 @end
+@interface SBWallpaperEffectView : UIView
+@end
+
+
+%hook SBWallpaperEffectView
+-(void)layoutSubviews {
+  BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBDockView)];
+  if(TweakEnabled && HideDockBackground && isCorrect) {
+    %orig();
+    self.hidden = true;
+  } else {
+    %orig();
+    self.hidden = false;
+  }
+}
+  -(void)setHidden:(bool)arg1 {
+    BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBDockView)];
+    if(TweakEnabled && HideDockBackground && isCorrect) {
+      %orig(true);
+    } else {
+      %orig(false);
+    }
+}
+
+%end
 
 %hook UITableView //Hiding Separators
-  -(id)init {
-    self = %orig;
-    if (self) {
-      seperatorsPointer = self;
-    }
-    return self;
-  }
   -(void)setSeparatorStyle:(long long)arg1 {
     if (TweakEnabled && HideSeparators) {
       %orig(0);
@@ -107,13 +111,6 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 %end
 
 %hook _UISearchBarSearchFieldBackgroundView //HIDE SEARCH BACKGROUND
-  -(id)init {
-    self = %orig;
-    if (self) {
-      searchbgPointer = self;
-    }
-    return self;
-  }
   -(void)didMoveToWindow {
     if(TweakEnabled && HideSearchBackground) {
       %orig();
@@ -122,19 +119,11 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
       %orig();
       self.hidden = false;
     }
+    %orig();
   }
 %end
 
 %hook PSListController //IOS12CONCEPT
-  -(void) loadView {
-    if(TweakEnabled && EnableConcept) {
-      %orig();
-      [self setEdgeToEdgeCells:NO];
-    } else {
-      %orig();
-      [self setEdgeToEdgeCells:YES];
-    }
-  }
   -(bool) _isRegularWidth {
     if(TweakEnabled && EnableConcept) {
       return YES;
@@ -144,7 +133,7 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
   }
 %end
 
-%hook PSUIPrefsListController
+%hook PSUIPrefsListController //IOS12CONCEPT
   -(bool) skipSelectingGeneralOnLaunch {
     if(TweakEnabled && EnableConcept) {
       return YES;
@@ -195,125 +184,78 @@ static void PreferencesChangedCallback(CFNotificationCenterRef center, void *obs
 %end
 
 %hook SBFolderControllerBackgroundView //HIDEFOLDERBLUR
--(void)didMoveToWindow {
-  if(TweakEnabled && HideFolderBlur) {
-    %orig();
-    self.hidden = true;
-  } else {
-    %orig();
-    self.hidden = false;
+  -(void)didMoveToWindow {
+    if(TweakEnabled && HideFolderBlur) {
+      %orig();
+      self.hidden = true;
+    } else {
+      %orig();
+      self.hidden = false;
+    }
   }
-}
 %end
 
 %hook UITextFieldBorderView //SHOW FOLDER NAME BACKGROUND
--(void)didMoveToWindow {
-  BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBFolderTitleTextField)];
-  if(TweakEnabled && ShowNameBg && isCorrect) {
-    self.alpha = 1;
-  } else {
-    %orig();
+  -(void)layoutSubviews {
+    BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBFolderTitleTextField)];
+    if(TweakEnabled && ShowNameBg && isCorrect) {
+      self.alpha = 1;
+    } else {
+      %orig();
+    }
   }
-}
 %end
 
 %hook SBFolderIconBackgroundView //HIDE FOLDER ICON BACKGROUND
--(void)didMoveToWindow {
-  if(TweakEnabled && HideFolderIcon) {
-    %orig();
-    self.hidden = true;
-  } else {
-    %orig();
-    self.hidden = false;
+    -(void)layoutSubviews {
+      if(TweakEnabled && HideFolderIcon) {
+        %orig();
+        self.hidden = true;
+      } else {
+        %orig();
+        self.hidden = false;
+      }
   }
-}
 
--(void)setHidden:(bool)arg1 {
-  if(TweakEnabled && HideFolderIcon) {
-    %orig(true);
-  } else {
-    %orig();
+  -(void)setHidden:(bool)arg1 {
+    if(TweakEnabled && HideFolderIcon) {
+      %orig(true);
+    } else {
+      %orig();
+    }
   }
-}
 %end
 
-%hook SBIconLegibilityLabelView
--(void) layoutSubviews {
-  if(TweakEnabled && HideIconLabels) {
-    %orig();
-    self.hidden = true;
-  } else {
-    %orig();
+%hook _UILegibilityImageView //HIDE ICON LABELS | SBIconLegibilityLabelView didn't work so I've hidden a subview of it, works fine now.
+  -(void)layoutSubviews {
+    BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBIconLegibilityLabelView)];
+    if(TweakEnabled && HideIconLabels && isCorrect) {
+      %orig();
+      self.hidden = true;
+    } else {
+      %orig();
+      self.hidden = false;
+    }
   }
-}
--(void) setHidden:(bool)arg1 {
-  if(TweakEnabled && HideIconLabels) {
-    %orig(true);
-  } else {
-    %orig();
+    -(void)setHidden:(bool)arg1 {
+      BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBIconLegibilityLabelView)];
+      if(TweakEnabled && HideIconLabels && isCorrect) {
+        %orig(true);
+      } else {
+        %orig(false);
+      }
   }
-}
 %end
 
-%hook SBDarkeningImageView
--(void)didMoveToWindow {
-  BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBDarkeningImageView)];
-  BOOL isDaddy = [[self superview] isMemberOfClass:%c(SBIconParallaxBadgeView)];
-
-  if(TweakEnabled && HideBadgeCount && isCorrect) {
-    %orig();
-    self.hidden = true;
-  } else {
-    %orig();
-  }
-  if(TweakEnabled && HideBadgeCount && isDaddy) {
-    %orig();
-    [self setFrame:CGRectMake( 0, 0, 26, 26)];
-  } else {
+%hook SBIconRecentlyUpdatedLabelAccessoryView //HIDE BLUE UPDATE DOT
+  -(void)didMoveToWindow {
+    if(TweakEnabled && HideUpdatedDot) {
+      %orig();
+      self.hidden = true;
+    } else {
+      %orig();
+      self.hidden = false;
+    }
     %orig();
   }
-}
--(void)setHidden:(bool)arg1 {
-  BOOL isCorrect = [[self superview] isMemberOfClass:%c(SBDarkeningImageView)];
-  if(TweakEnabled && HideBadgeCount && isCorrect) {
-    %orig(true);
-  } else {
-    %orig();
-  }
-}
-%end
-
-%hook SBIconBadgeView
--(void)didMoveToWindow {
-  if(TweakEnabled && HideBadgeCount) {
-    %orig();
-    [self setFrame:CGRectMake( 45, -11, 26, 26)];
-  } else {
-    %orig();
-  }
-  %orig();
-}
-%end
-
-
-%hook SBIconParallaxBadgeView
--(void)layoutSubviews {
-  if(TweakEnabled && HideBadgeCount) {
-    %orig();
-    [self setFrame:CGRectMake( 45, -11, 26, 26)];
-  } else {
-    %orig();
-  }
-  %orig();
-}
-%end
-
-%hook SBIconRecentlyUpdatedLabelAccessoryView
--(void)didMoveToWindow {
-  if(TweakEnabled && HideUpdatedDot) {
-    %orig();
-    self.hidden = true;
-  }
-  %orig();
-}
 %end

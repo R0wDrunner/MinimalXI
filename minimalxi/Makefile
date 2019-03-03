@@ -7,6 +7,7 @@ MinimalXI_FRAMEWORKS = UIKit
 MinimalXI_PRIVATE_FRAMEWORKS = Preferences
 MinimalXI_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
 
+ARCHS = arm64
 
 include $(THEOS_MAKE_PATH)/bundle.mk
 

@@ -6,16 +6,16 @@
 	items = (
 		{
 			cell = PSGroupCell;
-			defaults = "com.xiva.minimalxi";
+			defaults = "com.r0wdrunner.minimalxi";
 			label = "IOS 12 CONCEPT STYLE UI";
 		},
 		{
 			cell = PSSwitchCell;
-			default = true;
-			defaults = "com.xiva.minimalxi";
+			default = false;
+			defaults = "com.r0wdrunner.minimalxi";
 			key = "enableConcept";
 			label = "Enable IOS 12 Concept UI";
-			PostNotification = "com.xiva.minimalxi-prefsreload";
+			PostNotification = "com.r0wdrunner.minimalxi-prefsreload";
 		},
 	);
 }

@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>MinimalXI</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.xiva.minimalxi</string>
+	<string>com.r0wdrunner.minimalxi</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
